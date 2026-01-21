@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { Position } from "@/types/portfolio";
+import { Position, PortfolioSummary as PortfolioSummaryType } from "@/types/portfolio";
 import { PositionsTable } from "@/components/PositionsTable";
+import { PortfolioSummary } from "@/components/PortfolioSummary";
 import { useToast } from "@/hooks/use-toast";
 
 const API_BASE_URL = "http://localhost:4000/api";
@@ -8,10 +9,13 @@ const API_BASE_URL = "http://localhost:4000/api";
 const Index = () => {
   const [positions, setPositions] = useState<Position[]>([]);
   const [isLoadingPositions, setIsLoadingPositions] = useState(true);
+  const [summary, setSummary] = useState<PortfolioSummaryType | null>(null);
+  const [isLoadingSummary, setIsLoadingSummary] = useState(true);
   const { toast } = useToast();
 
   useEffect(() => {
     fetchPositions();
+    fetchSummary();
   }, []);
 
   const fetchPositions = async () => {
@@ -34,6 +38,26 @@ const Index = () => {
     }
   };
 
+  const fetchSummary = async () => {
+    try {
+      setIsLoadingSummary(true);
+      const response = await fetch(`${API_BASE_URL}/portfolio/summary`);
+      if (!response.ok) throw new Error("Failed to fetch summary");
+      const data = await response.json();
+      setSummary(data);
+    } catch (error) {
+      toast({
+        title: "Error",
+        description:
+          "Failed to load portfolio summary. Make sure the backend is running.",
+        variant: "destructive",
+      });
+      console.error("Error fetching summary:", error);
+    } finally {
+      setIsLoadingSummary(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8">
@@ -45,6 +69,11 @@ const Index = () => {
         </div>
 
         <div className="space-y-6">
+          <div>
+            <h2 className="text-2xl font-bold mb-4">Portfolio Summary</h2>
+            <PortfolioSummary summary={summary} isLoading={isLoadingSummary} />
+          </div>
+
           <div>
             <h2 className="text-2xl font-bold mb-4">Positions</h2>
             {isLoadingPositions ? (
