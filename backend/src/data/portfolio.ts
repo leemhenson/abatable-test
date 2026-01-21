@@ -1,0 +1,68 @@
+import { Position } from "../types";
+
+export const positions: Position[] = [
+  {
+    id: "1",
+    projectName: "Amazon Rainforest Conservation",
+    tonnes: 1000,
+    pricePerTonne: 25.5,
+    status: "available",
+    vintage: 2023,
+  },
+  {
+    id: "2",
+    projectName: "Wind Farm Initiative",
+    tonnes: 500,
+    pricePerTonne: 30.0,
+    status: "available",
+    vintage: 2024,
+  },
+  {
+    id: "3",
+    projectName: "Reforestation Program",
+    tonnes: 750,
+    pricePerTonne: 22.0,
+    status: "retired",
+    vintage: 2022,
+  },
+  {
+    id: "4",
+    projectName: "Solar Energy Project",
+    tonnes: 1200,
+    pricePerTonne: 28.75,
+    status: "available",
+    vintage: 2023,
+  },
+  {
+    id: "5",
+    projectName: "Ocean Carbon Capture",
+    tonnes: 300,
+    pricePerTonne: 35.0,
+    status: "retired",
+    vintage: 2023,
+  },
+  {
+    id: "6",
+    projectName: "Biomass Energy Conversion",
+    tonnes: 850,
+    pricePerTonne: 26.5,
+    status: "available",
+    vintage: 2024,
+  },
+  {
+    id: "7",
+    projectName: "Pending Verification Project",
+    tonnes: 0,
+    pricePerTonne: 20.0,
+    status: "available",
+    vintage: 2024,
+  },
+  {
+    id: "8",
+    projectName: "Micro Carbon Offset",
+    tonnes: 0.001,
+    pricePerTonne: 50.0,
+    status: "retired",
+    vintage: 2023,
+  },
+];
