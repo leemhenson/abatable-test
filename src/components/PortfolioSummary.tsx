@@ -1,11 +1,9 @@
+import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { PortfolioSummary as PortfolioSummaryType } from "@/types/portfolio";
-
-type Props = {
-  summary: PortfolioSummaryType | null;
-  isLoading: boolean;
-};
+import { useToast } from "@/hooks/use-toast";
+import { API_BASE_URL } from "@/constants";
 
 const formatCurrency = (value: number, { maximumFractionDigits }: { maximumFractionDigits?: number } = {}) =>
   new Intl.NumberFormat("en-US", {
@@ -17,7 +15,34 @@ const formatCurrency = (value: number, { maximumFractionDigits }: { maximumFract
 const formatNumber = (value: number) =>
   new Intl.NumberFormat("en-US").format(value);
 
-export function PortfolioSummary({ summary, isLoading }: Props) {
+export function PortfolioSummary() {
+  const [summary, setSummary] = useState<PortfolioSummaryType | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const { toast } = useToast();
+
+  useEffect(() => {
+    fetchSummary();
+  }, []);
+
+  const fetchSummary = async () => {
+    try {
+      setIsLoading(true);
+      const response = await fetch(`${API_BASE_URL}/portfolio/summary`);
+      if (!response.ok) throw new Error("Failed to fetch summary");
+      const data = await response.json();
+      setSummary(data);
+    } catch (error) {
+      toast({
+        title: "Error",
+        description:
+          "Failed to load portfolio summary. Make sure the backend is running.",
+        variant: "destructive",
+      });
+      console.error("Error fetching summary:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   if (isLoading) {
     return (
