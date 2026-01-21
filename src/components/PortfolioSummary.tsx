@@ -78,7 +78,8 @@ export function PortfolioSummary() {
   };
 
   return (
-    <div className="space-y-4">
+    <section className="space-y-4" aria-labelledby="portfolio-summary-heading">
+      <h2 id="portfolio-summary-heading" className="sr-only">Portfolio Summary</h2>
       <ToggleGroup
         type="single"
         value={statusFilter}
@@ -98,7 +99,7 @@ export function PortfolioSummary() {
       </ToggleGroup>
 
       {isLoading ? (
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-3" aria-busy="true" aria-label="Loading portfolio summary">
           {[...Array(3)].map((_, i) => (
             <Card key={i}>
               <CardHeader className="pb-2">
@@ -119,9 +120,9 @@ export function PortfolioSummary() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">
+          <output className="text-2xl font-bold">
             {formatNumber(Math.round((summary.totalTonnes)))}
-          </div>
+          </output>
         </CardContent>
       </Card>
       <Card>
@@ -131,9 +132,9 @@ export function PortfolioSummary() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">
+          <output className="text-2xl font-bold">
             {formatCurrency(Math.round(summary.totalValue), { maximumFractionDigits: 0 })}
-          </div>
+          </output>
         </CardContent>
       </Card>
       <Card>
@@ -143,13 +144,13 @@ export function PortfolioSummary() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">
+          <output className="text-2xl font-bold">
             {formatCurrency(summary.averagePricePerTonne)}
-          </div>
+          </output>
         </CardContent>
       </Card>
         </div>
       ) : null}
-    </div>
+    </section>
   );
 }

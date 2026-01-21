@@ -28,14 +28,15 @@ export function PositionsTable({ positions }: PositionsTableProps) {
   return (
     <div className="rounded-lg border border-border bg-card">
       <Table>
+        <caption className="sr-only">Portfolio positions showing project details and carbon credit information</caption>
         <TableHeader>
-          <TableRow>
-            <TableHead>Project Name</TableHead>
-            <TableHead className="text-right">Tonnes</TableHead>
-            <TableHead className="text-right">Price/Tonne</TableHead>
-            <TableHead className="text-right">Total Value</TableHead>
-            <TableHead className="text-center">Status</TableHead>
-            <TableHead className="text-center">Vintage</TableHead>
+          <TableRow className="hover:bg-transparent">
+            <TableHead scope="col">Project Name</TableHead>
+            <TableHead scope="col" className="text-right">Tonnes</TableHead>
+            <TableHead scope="col" className="text-right">Price/Tonne</TableHead>
+            <TableHead scope="col" className="text-right">Total Value</TableHead>
+            <TableHead scope="col" className="text-center">Status</TableHead>
+            <TableHead scope="col" className="text-center">Vintage</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -48,7 +49,10 @@ export function PositionsTable({ positions }: PositionsTableProps) {
                 {formatCurrency(position.tonnes * position.pricePerTonne)}
               </TableCell>
               <TableCell className="text-center">
-                <Badge variant={position.status === 'available' ? 'default' : 'secondary'}>
+                <Badge
+                  variant={position.status === 'available' ? 'default' : 'secondary'}
+                  aria-label={`Status: ${position.status}`}
+                >
                   {position.status}
                 </Badge>
               </TableCell>
