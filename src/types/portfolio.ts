@@ -1,5 +1,7 @@
 export type PositionStatus = "available" | "retired";
 
+export type StatusFilter = PositionStatus | "all";
+
 export type Position = {
   id: string;
   projectName: string;
